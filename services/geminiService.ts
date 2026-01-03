@@ -2,13 +2,18 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { Category, Difficulty, MathProblem } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+// Fungsi untuk mendapatkan instance AI secara aman
+const getAI = () => {
+  const apiKey = process.env.API_KEY || '';
+  return new GoogleGenAI({ apiKey });
+};
 
 export const generateMathProblems = async (
   category: Category,
   difficulty: Difficulty,
   count: number = 5
 ): Promise<MathProblem[]> => {
+  const ai = getAI();
   const response = await ai.models.generateContent({
     model: "gemini-3-flash-preview",
     contents: `Hasilkan ${count} soal matematika untuk anak-anak sekolah dasar.
@@ -48,6 +53,7 @@ export const generateMathProblems = async (
 };
 
 export const getMathExplanation = async (question: string): Promise<string> => {
+  const ai = getAI();
   const response = await ai.models.generateContent({
     model: "gemini-3-flash-preview",
     contents: `Jelaskan konsep matematika ini kepada anak umur 7-10 tahun secara menyenangkan dan mudah dimengerti: ${question}`,
@@ -60,6 +66,7 @@ export const getMathExplanation = async (question: string): Promise<string> => {
 
 export const speakText = async (text: string) => {
   try {
+    const ai = getAI();
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash-preview-tts",
       contents: [{ parts: [{ text: `Katakan dengan ceria: ${text}` }] }],
