@@ -1,0 +1,7 @@
+{
+  "name": "MathSpace Adventure",
+  "description": "An interactive, AI-powered math learning platform for children featuring gamified arithmetic, geometry, and a friendly AI Math Buddy to explain concepts in a fun way.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
